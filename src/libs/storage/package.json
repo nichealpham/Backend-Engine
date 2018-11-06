@@ -1,0 +1,6 @@
+{
+    "author": "Nicheal Pham",
+    "dependencies": {
+        "@google-cloud/storage": "^1.7.0"
+    }
+}
