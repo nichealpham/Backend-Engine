@@ -9,8 +9,8 @@ export class ProjectConfig {
     };
 
     static COLLECTIONS = {
-        USER: { PATH: '[USER_EMAIL]/info', PARAMS: { USER_EMAIL: 'guest@gmail.com' }, DB_TYPE: 'fireray' }
-        // USER: { path: 'user', DB_TYPE: 'firestore' }
+        AUTHENTICATION: { PATH: 'authentication', DB_TYPE: 'firestore' },
+        USER: { PATH: 'user', DB_TYPE: 'mongoose' },
     };
 
     static STORAGES = {
@@ -26,8 +26,11 @@ export class ProjectConfig {
     };
 
     static APIS = [
-        'GET://user/get/:_id',
         'GET://user/hello/:_name',
+        'GET://user/get/:_id',
+        'POST://user/register',
+        'POST://user/login',
+        'DELETE://user/delete/:_id',
     ];
 
     static CLOUD_PROVIDER = {
@@ -38,6 +41,15 @@ export class ProjectConfig {
         MEMORYSIZE: 1024,
         TIMEOUT: 300,
     };
+
+    // static COLLECTIONS = {
+    //     USER: { PATH: 'user', DB_TYPE: 'firestore' },
+    //     USER: {
+    //         PATH: '[USER_EMAIL]/info', DEFAULT_PARAMS: {
+    //             USER_EMAIL: 'guest@gmail.com'
+    //         }, DB_TYPE: 'fireray'
+    //     }
+    // };
 }
 
 class CloudPlatform {

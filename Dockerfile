@@ -4,10 +4,11 @@ FROM ubuntu/node8:latest
 WORKDIR /app
 
 # Bundle app source & Install app dependencies
-COPY dest/ /app/
-COPY package.json /app/
+COPY . /app/
 
-RUN npm install --only=production
+RUN npm install && \
+    npm run build && \
+    npm run test
 
 EXPOSE 4001
 CMD [ "npm", "start" ]

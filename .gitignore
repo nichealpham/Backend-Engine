@@ -8,7 +8,6 @@ yarn-debug.log*
 yarn-error.log*
 
 *ServiceAccount*
-*PrivateKeys*
 tmp/*
 uploads/*
 backup/*

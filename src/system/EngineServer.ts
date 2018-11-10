@@ -8,6 +8,7 @@ import * as multer from 'multer';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import { TerminalHelper } from '../libs/helper/TerminalHelper';
 
 // For APIs that are not registered inside ProjectConfig.APIS, allow only for internal usage
 let AllowOrigin = {
@@ -34,7 +35,7 @@ let Multer = {
 };
 
 export class EngineServer {
-    static startServer() {
+    static async startServer() {
         console.log('\n Starting server express ...');
         let server: any = this.createServer();
 

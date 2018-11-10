@@ -2,11 +2,9 @@ import FirestoreApp from './FirestoreApp';
 import * as crypto from 'crypto';
 
 export class FirestoreRepository {
-    protected counter;
     protected path;
 
     constructor(path: string) {
-        this.counter = FirestoreApp.doc(getCounterPath(path));
         this.path = path;
     }
 
@@ -24,21 +22,6 @@ export class FirestoreRepository {
                     resolve(data);
                 }
             }).catch(() => { resolve(null) });
-        });
-    }
-
-    async getNewCount(): Promise<string> {
-        let count = padNum2Str(1, 10);
-        return new Promise<string>((resolve) => {
-            this.counter.get().then((doc) => {
-                if (!doc.exists) {
-                    return resolve(count);
-                }
-                else {
-                    let { _counts } = doc.data();
-                    return resolve(padNum2Str(Number(_counts) + 1, 10));
-                }
-            }).catch(() => { return resolve('') });
         });
     }
 
@@ -117,31 +100,12 @@ export class FirestoreRepository {
     }
 
     async setDoc(data) {
-        if (!data._id)
-            return null;
         return new Promise<any>((resolve) => {
             FirestoreApp.collection(this.path).doc(data._id).set(data).then(() => { resolve(data) }).catch(() => { resolve(null) });
         });
     }
 
-    async setCounter(_counts: string) {
-        return new Promise<any>((resolve) => {
-            this.counter.set({ _counts }).then(() => { resolve(_counts) }).catch(() => { resolve(null) });
-        });
-    }
-
-    async create(data: any) {
-        data._id = await this.getNewCount();
-        if (!data._id)
-            return null;
-        let result = await this.setDoc(data);
-        if (!result)
-            return null;
-        await this.setCounter(data._id);
-        return result;
-    }
-
-    async createWithUniqueId(data: any, bytesLength = 8, encryption = 'hex'): Promise<any> {
+    async create(data: any, bytesLength = 8, encryption = 'hex') {
         if (!data._id)
             data._id = getRandomBytes(bytesLength, encryption);
         return await this.setDoc(data);
@@ -161,20 +125,6 @@ export class FirestoreRepository {
     }
 }
 
-function padNum2Str(number: number, pad = 10): string {
-    let result = number.toString();
-    while (result.length < pad) { result = '0' + result };
-    return result;
-}
-
 function getRandomBytes(bytesLength: number = 8, encryption: string = 'hex'): string {
     return crypto.randomBytes(bytesLength).toString(encryption);
-}
-
-function getCounterPath(path: string): string {
-    return path.substr(
-        0, path.lastIndexOf('/') + 1
-    ) + '_counts/' + path.substr(
-        path.lastIndexOf('/') + 1, path.length
-    );
 }

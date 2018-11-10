@@ -2,30 +2,13 @@ import * as crypto from 'crypto';
 
 export class CommonFunctions {
     static mergeWithoutExtend(object1, object2) {
+        let result = JSON.parse(JSON.stringify(object1));
         if (!object2)
-            return object1;
-
+            return result;
         for (let key in object1) {
-            object1[key] = object2[key] || object1[key];
+            result[key] = object2[key] || object1[key];
         }
-        return object1;
-    }
-
-    static mergeDeepWithoutExtend(object1, object2) {
-        if (!object2)
-            return object1;
-
-        for (let key in object1) {
-            if (typeof object1[key] === 'object') {
-                for (let key2 in object1[key]) {
-                    object1[key][key2] = (object2[key] && object2[key][key2]) || object1[key][key2];
-                }
-            }
-            else {
-                object1[key] = object2[key] || object1[key];
-            }
-        }
-        return object1;
+        return result;
     }
 
     static getRandomBytes(bytesLength: number = 8, encryption: string = 'hex'): string {
