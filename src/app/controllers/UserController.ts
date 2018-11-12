@@ -1,22 +1,30 @@
+import { Middlewares } from './../../system/Middlewares';
 import { UserService } from './../services/UserService';
 
 export class UserController {
     static getAsRounter() {
         return {
-            'GET://hello': this.helloWorld,
-            'GET://get/:_id': this.get,
-            'POST://register': this.register,
-            'POST://login': this.login,
-            'DELETE://delete/:_id': this.delete,
+            'GET://user/hello': [
+                Middlewares.allowAllTraffic(),
+                this.helloWorld],
+            'POST://user/register': [
+                Middlewares.allowAllTraffic(),
+                this.register],
+            'POST://user/login': [
+                Middlewares.allowAllTraffic(),
+                this.login],
+            'PUT://user/avatar': [
+                Middlewares.allowAllTraffic(),
+                Middlewares.allowSingleUploadMemory('fileUpload'),
+                this.updateAvatar],
+            'DELETE://user/delete/:_id': [
+                Middlewares.allowAllTraffic(),
+                this.delete],
         }
     }
 
     static async helloWorld(req) {
-        return `Hello there ${req.query._name || 'Guest'}`;
-    }
-
-    static async get(req) {
-        return await UserService.get(req.params._id);
+        return `Hello there ${req.query.name || 'Guest'}`;
     }
 
     static async register(req) {
@@ -25,6 +33,10 @@ export class UserController {
 
     static async login(req) {
         return await UserService.login(req.body.email, req.body.password);
+    }
+
+    static async updateAvatar(req) {
+        return req.file;
     }
 
     static async delete(req) {
