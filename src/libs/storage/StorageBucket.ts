@@ -1,6 +1,5 @@
 import * as path from 'path';
 import * as Storage from '@google-cloud/storage';
-import { CommonFunctions } from '../../app/models/common/CommonFunctions';
 let ProjectId = 'cassandra-c8497';
 
 let BucketName = ProjectId + '.appspot.com';
@@ -29,18 +28,21 @@ export class StorageBucket {
         });
     }
 
-    async uploadBuffer(filePath: string, buffer: Buffer, makePublic: boolean = false, cacheControl: string = 'no-cache, no-store, max-age=0', prefix = ''): Promise<string> {
+    async uploadBuffer(filePath: string, buffer: Buffer, makePublic: boolean = false, cacheControl: string = 'no-cache, no-store, max-age=0', prefix = '', mimetype: string = ''): Promise<string> {
         filePath = prefix ? prefix + '/' + filePath : filePath;
         return new Promise<string>(async (resolve, reject) => {
             if (await this.exist(filePath))
                 await this.deleteFile(filePath);
 
             let file = GStorage.bucket(BucketName).file(`${this.subDirectory}/${filePath}`);
-            let writeStream = file.createWriteStream({
+            let option: any = {
                 metadata: {
                     cacheControl
                 }
-            });
+            }
+            if (mimetype)
+                option.metadata.contentType = mimetype;
+            let writeStream = file.createWriteStream(option);
 
             writeStream.on('error', (err) => {
                 reject(err);

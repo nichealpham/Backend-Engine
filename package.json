@@ -6,12 +6,12 @@
 		"dev": "./node_modules/.bin/ts-node ./src/Server.ts",
 		"eslint": "./node_modules/.bin/eslint --ext .ts --ext .js ./src",
 		"build": "npm run eslint && ./node_modules/.bin/tsc && ./node_modules/.bin/grunt copy",
-		"test": "npm run build && node dest/app/UnitTest.js",
+		"test": "npm run build && node dest/app/UnitTests.js",
 		"staging": "npm run build && node dest/Server.js",
-		"docker": "npm i typescript ts-node @types/node && ./node_modules/.bin/ts-node src/EngineDocker.ts",
-		"deploy-gcp": "npm run build && cp package.json dest/ && cp app.ymal dest/ && cd dest && gcloud app deploy --project testengine18238",
+		"docker": "npm i typescript ts-node @types/node && ./node_modules/.bin/ts-node src/system/EngineDocker.ts",
+		"deploy-gcp": "npm run build && gcloud app deploy --project testengine18238",
 		"deploy-sls": "npm run build && cp package.json dest/ && cp serverless.yml dest/ && cd dest && npm install --only=production && sls deploy",
-		"start": "NODE_ENV=Production node Server.js",
+		"start": "NODE_ENV=Production node dest/Server.js",
 		"commit": "git push origin dev && git checkout master && git merge dev && git push origin master && git checkout dev"
 	},
 	"dependencies": {

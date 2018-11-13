@@ -102,7 +102,7 @@ export class MongooseRepository {
     }
 
     async update(id: any, data: any): Promise<boolean> {
-        let result = await this.collection.update({ _id: MongooseFunction.toObjectId(id) }, data).exec();
+        let result = await this.collection.updateOne({ _id: MongooseFunction.toObjectId(id) }, data).exec();
         return result && result.ok > 0;
     }
 

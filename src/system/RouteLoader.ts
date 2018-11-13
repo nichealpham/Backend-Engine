@@ -1,4 +1,4 @@
-import { App } from './../app/App';
+import { App } from '../app/App';
 import { ConsoleColor } from './../app/models/common/ConsoleColor';
 import { ProjectConfig } from './ProjectConfig';
 

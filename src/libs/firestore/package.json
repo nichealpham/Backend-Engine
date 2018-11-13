@@ -1,6 +1,0 @@
-{
-    "author": "Nicheal Pham",
-    "dependencies": {
-        "firebase-admin": "^5.13.1"
-    }
-}

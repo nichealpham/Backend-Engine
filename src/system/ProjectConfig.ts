@@ -14,7 +14,7 @@ export class ProjectConfig {
     };
 
     static STORAGES = {
-        AVARTA: { PATH: 'user/avarta', TYPE: 'storage' },
+        AVATAR: { PATH: 'user/avatar', TYPE: 'storage' },
     };
 
     static SERVICES = {

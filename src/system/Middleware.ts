@@ -1,10 +1,11 @@
 import * as cors from 'cors';
 import * as multer from 'multer';
-import { ProjectConfig } from './ProjectConfig';
-import { SystemHelper } from '../libs/helper/SystemHelper';
-import { CommonFunctions } from './../app/models/common/CommonFunctions';
 
-export class Middlewares {
+import { SystemHelper } from '../libs/helper/SystemHelper';
+import { ProjectConfig } from './ProjectConfig';
+import { CommonFunctions } from '../app/models/common/CommonFunctions';
+
+export class Middleware {
     static allowAllTraffic() {
         return cors();
     }

@@ -36,7 +36,11 @@ let UserSchema = {
             occupation: String,
         }, { _id: false }),
 
-        accessToken: String,
+        accessToken: {
+            type: String,
+            index: true,
+            unique: true,
+        },
         createdAt: Date,
     }
 };

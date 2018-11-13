@@ -15,6 +15,7 @@ export class UnitTest {
             await this.loginUser();
             await this.updateUser();
             await this.getUserByID();
+            await this.findUserByToken();
             await this.deleteUser();
             console.log(ConsoleColor.White, `\n All test finised with:`);
             console.log(ConsoleColor.Red, `\n - ${_failed} failed cases`);
@@ -49,6 +50,11 @@ export class UnitTest {
     static async getUserByID() {
         let user = await UserService.get(_data._id);
         writeScreenLog('getUserByID', user);
+    }
+
+    static async findUserByToken() {
+        let userAuthen = await UserService.findByToken(_data.accessToken);
+        writeScreenLog('findUserByToken', userAuthen);
     }
 
     static async updateUser() {
